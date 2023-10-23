@@ -12,10 +12,18 @@ function RecipeForm({ handleChange, recipeData }) {
     const [ingredient, setIngredient] = useState([''])
     console.log(recipeData)
     const handleClick = () => {
-        setIngredient(oldIngredient => {
-            return [...oldIngredient, '']
+        setIngredient(recipeIngredients => {
+            return [...recipeIngredients, '']
         })
     };
+
+    // function to handle the changes in the ingredient
+    const handleChangeIngredient = (e, idx) => {
+        //assign each iteration of the ingredient the value of the target input field
+        ingredient[idx] = e.target.value
+        setIngredient(ingredient)
+    };
+
     return (
         <div className='recipeFormContainer'>
             <Card className='recipeFormCard' border={'secondary'}>
@@ -35,8 +43,11 @@ function RecipeForm({ handleChange, recipeData }) {
                         {/* recipe ingredients */}
                         <Form.Group className="mb-3" controlId="formGroupIngredients">
                             <Form.Label>Ingredients</Form.Label>
+                            {/* {ingredient.map((newIngredient, idx) => (
+                                <Form.Control name="recipeIngredients" type="text" placeholder="Ingredients" value={newIngredient[idx]} onChange={handleChange} key={idx} />
+                            ))} */}
                             {ingredient.map((newIngredient, idx) => (
-                                <Form.Control name="recipeIngredients" type="text" placeholder="Ingredients" value={recipeData.recipeIngredients} onChange={handleChange} key={idx} />
+                                <Form.Control name="recipeIngredients" type="text" placeholder="Ingredients" value={newIngredient} onChange={handleChangeIngredient} key={idx} />
                             ))}
                             <Button variant='primary' onClick={handleClick}>Add Ingredient</Button>
                         </Form.Group>
