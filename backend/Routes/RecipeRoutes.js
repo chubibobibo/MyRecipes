@@ -13,17 +13,18 @@ Router.get('/', async (req, res) => {
 
 //Creating a new recipe
 Router.post('/', async (req, res) => {
-    const { recipeName, recipePhoto, recipeIngredients, recipeInstruction, cookingTime, category, description } = req.body;
+    // const { recipeName, recipePhoto, recipeIngredients, recipeInstruction, cookingTime, category, description } = req.body;
     const newRecipe = await new RecipeModel(
-        {
-            recipeName: recipeName,
-            recipePhoto: recipePhoto,
-            recipeIngredients: recipeIngredients,
-            recipeInstruction: recipeInstruction,
-            cookingTime: cookingTime,
-            category: category,
-            description: description
-        }
+        req.body
+        // {
+        //     recipeName: recipeName,
+        //     recipePhoto: recipePhoto,
+        //     recipeIngredients: [recipeIngredients],
+        //     recipeInstruction: recipeInstruction,
+        //     cookingTime: cookingTime,
+        //     category: category,
+        //     description: description
+        // }
     );
     await newRecipe.save();
     res.json({ message: 'New recipe created', newRecipe })
@@ -55,6 +56,7 @@ Router.put('/save', async (req, res) => {
     console.log(foundUser.favRecipe)
     res.json({ message: 'favorite recipe'.foundUser })
 })
+
 
 
 
