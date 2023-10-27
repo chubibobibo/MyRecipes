@@ -11,7 +11,7 @@ function Index() {
     useEffect(() => {
         async function getRecipeId() {
             const foundRecipe = await axios.get('http://localhost:3001/main/categories');
-            console.log(foundRecipe.data.foundCategory)
+            // console.log(foundRecipe.data.foundCategory)
             setRecipeId(foundRecipe.data.foundCategory)
         } getRecipeId();
         // console.log(recipeId)

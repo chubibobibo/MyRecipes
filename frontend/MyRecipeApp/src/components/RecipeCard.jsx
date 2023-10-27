@@ -9,7 +9,7 @@ function RecipeCard({ newData }) {
     return (
         <div>
             <Card border={'secondary'}>
-                <Card.Img variant="top" src={newData.recipePhoto} />
+                <Card.Img variant="top" src={newData.recipePhoto.url} />
                 <Card.Body>
                     <Card.Title>{newData.recipeName}</Card.Title>
                     <Card.Text>
@@ -21,6 +21,7 @@ function RecipeCard({ newData }) {
                     <Link to={`/recipe/${newData._id}`}><Button>Show Recipe</Button></Link>
                 </Card.Body>
             </Card>
+
         </div>
     )
 }

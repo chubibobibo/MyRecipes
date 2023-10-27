@@ -10,13 +10,26 @@ const RecipeSchema = new Schema(
             required: true
         },
         recipePhoto: {
-            type: String,
-            required: true
+            public_id: {
+                type: String,
+                required: true
+            },
+            url: {
+                type: String,
+                required: true
+            }
+
         },
         recipeIngredients: [
             {
-                type: String,
-                required: true
+                ingredientName: {
+                    type: String,
+                    required: true
+                },
+                qty: {
+                    type: String,
+                    required: true
+                }
             }
         ],
         recipeInstruction: {

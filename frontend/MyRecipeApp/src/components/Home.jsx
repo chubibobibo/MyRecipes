@@ -22,11 +22,13 @@ function Home() {
     console.log(allRecipes)
     return (
         <div className='catCard'>
-            <Row xs={1} md={2}>
-                {allRecipes.map(recipes =>
-                    <HomeDisplay recipes={recipes} key={recipes._id} />
-                )}
-            </Row>
+            {allRecipes == 0 ? <h1>Wow such empty</h1> :
+                <Row xs={1} md={2}>
+                    {allRecipes.map(recipes =>
+                        <HomeDisplay recipes={recipes} key={recipes._id} />
+                    )}
+                </Row>
+            }
         </div>
     )
 }

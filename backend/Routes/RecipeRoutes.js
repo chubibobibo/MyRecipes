@@ -1,33 +1,51 @@
 import express from 'express';
 import RecipeModel from '../models/Recipe.js';
 import UserModel from '../models/User.js';
-import CategoryModel from '../models/Category.js'
+import CategoryModel from '../models/Category.js';
+import cloudinary from '../Cloudinary/index.js'
 const Router = express.Router();
 
 //get all recipes
 Router.get('/', async (req, res) => {
     const foundEntries = await RecipeModel.find({});
-    console.log(foundEntries);
+    // console.log(foundEntries);
     res.json({ message: 'entries found', foundEntries })
 });
 
 //Creating a new recipe
+//UPdATE: used the cloudinary API to uplaod a single photo
 Router.post('/', async (req, res) => {
-    // const { recipeName, recipePhoto, recipeIngredients, recipeInstruction, cookingTime, category, description } = req.body;
-    const newRecipe = await new RecipeModel(
-        req.body
-        // {
-        //     recipeName: recipeName,
-        //     recipePhoto: recipePhoto,
-        //     recipeIngredients: [recipeIngredients],
-        //     recipeInstruction: recipeInstruction,
-        //     cookingTime: cookingTime,
-        //     category: category,
-        //     description: description
-        // }
-    );
-    await newRecipe.save();
-    res.json({ message: 'New recipe created', newRecipe })
+    // console.log(req.body)
+    const { recipeName, recipePhoto, recipeIngredients, recipeInstruction, cookingTime, category, description } = req.body;
+    try {
+        if (recipePhoto) {
+            //use clodinary upload API
+            //response is an object
+            const response = await cloudinary.uploader.upload(recipePhoto, {
+                upload_prest: "MyRecipes"
+            })
+            console.log(response)
+            // console.log(response.secure_url)
+            if (response) {
+                const newRecipe = new RecipeModel({
+                    recipeName: recipeName,
+                    recipePhoto: {
+                        public_id: response.public_id,
+                        url: response.secure_url
+                    },
+                    recipeIngredients: recipeIngredients,
+                    recipeInstruction: recipeInstruction,
+                    cookingTime: cookingTime,
+                    category: category,
+                    description: description
+                });
+                await newRecipe.save()
+                res.json({ message: 'New recipe created', newRecipe })
+            } else { console.log('no response from cloudinary') }
+        } else { console.log('no photo uploaded') }
+    } catch (err) {
+        console.log(err)
+    }
 })
 
 //get all categories
