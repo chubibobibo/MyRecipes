@@ -38,7 +38,7 @@ function RecipeForm({ handleChange, recipeData }) {
                         {/* recipe photo */}
                         <Form.Group className="mb-3" controlId="formGroupPhoto">
                             <Form.Label>Photo</Form.Label>
-                            <Form.Control name="recipePhoto" type="text" placeholder="Password" />
+                            <Form.Control name="recipePhoto" type="file" placeholder="Password" value={recipeData.recipePhoto} />
                         </Form.Group>
                         {/* recipe ingredients */}
                         <Form.Group className="mb-3" controlId="formGroupIngredients">

@@ -7,12 +7,16 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios, { isCancel, AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Spinner from 'react-bootstrap/Spinner';
 
 
 function NewRecipe() {
     const navigate = useNavigate();
     //state to manage the data from form
     const [recipeData, setRecipeData] = useState({ recipeName: '', recipePhoto: '', recipeIngredients: [{ ingredientName: '', qty: '' }], recipeInstruction: '', cookingTime: '', category: '', description: '' });
+
+    //state to manage loading status.
+    const [isLoading, setIsLoading] = useState(false);
 
     //state to manage the file(photo) sent by the form
     const [fileData, setFileData] = useState('');
@@ -88,12 +92,14 @@ function NewRecipe() {
         e.preventDefault();
         // console.log(recipeData)
         try {
+            setIsLoading(true)
             await axios.post('http://localhost:3001/main/', recipeData);
             // console.log(result)
             setRecipeData({ recipeName: '', recipePhoto: '', recipeIngredients: [{}], recipeInstruction: '', cookingTime: '', category: '', description: '' })
             navigate('/')
             alert('New Recipe Created')
             // console.log(recipeData)
+            setIsLoading(false)
         } catch (err) {
             console.log(err)
         }
@@ -153,11 +159,21 @@ function NewRecipe() {
                             <Form.Control as="textarea" placeholder="Description" name='description' value={recipeData.description} onChange={handleChange} />
                         </Form.Group>
                         {/* button */}
-                        <Button variant="primary" type='submit'>Submit</Button>
+                        {isLoading === true ?
+                            <><Button variant="primary" disabled>
+                                <Spinner
+                                    as="span"
+                                    animation="grow"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                />
+                                Loading...
+                            </Button></> : <Button variant="primary" type='submit'>Submit</Button>
+                        }
                     </Form>
                 </Card.Body>
             </Card>
-            <p>{recipeData.category}</p>
         </div>
     )
 }

@@ -11,20 +11,9 @@ function HomeDisplay({ recipes, key }) {
     return (
         <div>
             <Col key={key} className='catRow'>
-                <RecipeCard newData={recipes} />
-                {/* <Card  >
-                    <Card.Img variant="top" src={recipes.recipePhoto} />
-                    <Card.Body>
-                        <Card.Title>{recipes.recipeName}</Card.Title>
-                        <Card.Text>
-                            This is a wider card with supporting text below as a natural lead-in
-                            to additional content. This content is a little bit longer.
-                        </Card.Text>
-                    </Card.Body>
-                    <Card.Footer>
-                        <small className="text-muted">Last updated 3 mins ago</small>
-                    </Card.Footer>
-                </Card> */}
+                {recipes ?
+                    <RecipeCard newData={recipes} /> : <h1>No recipes</h1>
+                }
             </Col>
         </div >
     )

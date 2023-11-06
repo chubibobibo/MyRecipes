@@ -21,10 +21,11 @@ Router.post('/', async (req, res) => {
         if (recipePhoto) {
             //use clodinary upload API
             //response is an object
+            //cloudianry returns a public_id and secure_url
             const response = await cloudinary.uploader.upload(recipePhoto, {
                 upload_prest: "MyRecipes"
             })
-            console.log(response)
+            // console.log(response)
             // console.log(response.secure_url)
             if (response) {
                 const newRecipe = new RecipeModel({
@@ -51,13 +52,13 @@ Router.post('/', async (req, res) => {
 //get all categories
 Router.get('/categories', async (req, res) => {
     const foundCategory = await CategoryModel.find({});
-    console.log(foundCategory);
+    // console.log(foundCategory);
     res.json({ message: 'categories available', foundCategory })
 })
 //displaying a specific recipe
 Router.post('/recipe/recipeId', async (req, res) => {
     const { recipeId } = req.body;
-    console.log(recipeId)
+    // console.log(recipeId)
     const foundRecipe = await RecipeModel.findById(recipeId)
     res.json({ message: 'recipe found', foundRecipe });
 })
@@ -72,7 +73,32 @@ Router.put('/save', async (req, res) => {
     foundUser.favRecipe.push(foundRecipe.id);
     foundUser.save()
     console.log(foundUser.favRecipe)
-    res.json({ message: 'favorite recipe'.foundUser })
+    res.json({ message: 'favorite recipe', foundUser })
+});
+
+//Updating an existing recipe
+//using patch because not all the data stored in the database will be changed.
+Router.put('/recipe/recipeId/edit', async (req, res) => {
+    // const { recipeId } = req.params
+    const { recipeName, recipePhoto, recipeIngredients, recipeInstruction, cookingTime, category, description, recipeId } = req.body;
+    // console.log(req.body)
+    try {
+        const foundRecipe = await RecipeModel.findByIdAndUpdate(recipeId, req.body, { runValidators: true, new: true });
+        foundRecipe.save()
+        // console.log(foundRecipe)
+        res.json({ message: 'Recipe Updated', foundRecipe });
+    } catch (err) {
+        console.log(err)
+    }
+
+})
+
+//deleting an existing recipe
+Router.post('/recipe/recipeId/delete', async (req, res) => {
+    const { recipeId } = req.body;
+    console.log(recipeId)
+    const foundRecipe = await RecipeModel.findByIdAndDelete(recipeId);
+    res.json({ message: 'Recipe Deleted' })
 })
 
 
