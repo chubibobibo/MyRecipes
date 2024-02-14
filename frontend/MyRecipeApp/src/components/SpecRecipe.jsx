@@ -16,7 +16,7 @@ function SpecRecipe() {
     useEffect(() => {
         async function getData() {
             const data = await axios.post('http://localhost:3001/main/recipe/recipeId', { recipeId });
-            // console.log(data.data.foundRecipe.recipePhoto.url)
+            console.log(data.data.foundRecipe.recipePhoto.url)
             setRecipeData(data.data.foundRecipe)
             setPhotoData(data.data.foundRecipe.recipePhoto)
         } getData()
@@ -25,6 +25,7 @@ function SpecRecipe() {
     return (
         <div>
             <SpecRecipeDisplay newData={recipeData} photoData={photoData} recipeId={recipeId} />
+
         </div>
     )
 }

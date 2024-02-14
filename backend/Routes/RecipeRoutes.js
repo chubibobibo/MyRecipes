@@ -56,7 +56,9 @@ Router.get('/categories', async (req, res) => {
     res.json({ message: 'categories available', foundCategory })
 })
 //displaying a specific recipe
-Router.post('/recipe/recipeId', async (req, res) => {
+Router.post('/recipe/:recipeId', async (req, res) => {
+    // const { recipeId } = req.params
+    // console.log(req.params)
     const { recipeId } = req.body;
     // console.log(recipeId)
     const foundRecipe = await RecipeModel.findById(recipeId)
@@ -92,6 +94,22 @@ Router.put('/recipe/recipeId/edit', async (req, res) => {
     }
 
 })
+
+//New Update route using params
+// Router.put('/recipe/recipeId', async (req, res) => {
+//     // const { recipeId } = req.params;
+//     console.log(req.params)
+//     const { recipeName, recipePhoto, recipeIngredients, recipeInstruction, cookingTime, category, description, recipeId } = req.body;
+//     console.log(req.body)
+//     // look for the id in the RecipeModel
+//     const foundRecipe = await RecipeModel.findById(recipeId);
+//     if (!foundRecipe) {
+//         res.status(400)
+//         throw new Error('Recipe not found')
+//     }
+//     const updatedRecipe = await RecipeModel.findByIdAndUpdate(recipeId, req.body, { new: true })
+//     res.status(200).json({ message: 'Recipe Updated' }, updatedRecipe)
+// })
 
 //deleting an existing recipe
 Router.post('/recipe/recipeId/delete', async (req, res) => {

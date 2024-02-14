@@ -5,7 +5,6 @@ import dotenv from "dotenv";
 dotenv.config();
 import { UserRoutes } from './Routes/UserRoutes.js';
 import { RecipeRoutes } from './Routes/RecipeRoutes.js';
-import multer from 'multer';
 //import the configured storage that we created for cloudinary
 // import storage from './Cloudinary/index.js';
 
@@ -24,6 +23,12 @@ async function main() {
     await mongoose.connect(process.env.MONGODBURI);
 }
 
+//error handler
+app.use((err, res, req, next) => {
+    //destructure err providing a defualt message and status if non returned.
+    const { message = 'an error occured', status = 500 } = err
+    res.status(status).send(message)
+})
 
 app.listen(process.env.PORT, () => {
     console.log(`SERVING PORT ${process.env.PORT}`)
