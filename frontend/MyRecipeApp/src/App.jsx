@@ -6,8 +6,9 @@ import UserRegister from './components/UserRegister.jsx';
 import UserLogin from './components/UserLogin.jsx';
 import Category from './components/Category.jsx';
 import Navbar from './components/Navbar.jsx';
-import SpecRecipe from './components/SpecRecipe.jsx'
-import NewRecipe from './components/NewRecipe.jsx'
+import SpecRecipe from './components/SpecRecipe.jsx';
+import NewRecipe from './components/NewRecipe.jsx';
+import UpdateRecipe from './components/UpdateRecipe.jsx';
 import './App.css'
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route exact path='/newRecipe' element={<NewRecipe />} />
           {/* : for useParams, specCategory is a placeholder for whatever the link will be using */}
           <Route exact path='/recipe/:recipeId' element={<SpecRecipe />} />
+          <Route exact path='/recipe/:recipeId/edit' element={<UpdateRecipe />} />
           <Route exact path='/categories/:specCategory' element={<Category />} />
         </Routes>
       </Router>

@@ -8,19 +8,21 @@ import Button from 'react-bootstrap/Button';
 function RecipeCard({ newData }) {
     return (
         <div>
-            <Card border={'secondary'}>
-                <Card.Img variant="top" src={newData.recipePhoto} />
-                <Card.Body>
-                    <Card.Title>{newData.recipeName}</Card.Title>
-                    <Card.Text>
-                        {newData.description}
-                    </Card.Text>
-                    <Card.Text>
-                        <small className="text-muted">Cooking Time: {newData.cookingTime} minutes</small>
-                    </Card.Text>
-                    <Link to={`/recipe/${newData._id}`}><Button>Show Recipe</Button></Link>
-                </Card.Body>
-            </Card>
+            {newData ? <>
+                <Card border={'secondary'}>
+                    <Card.Img variant="top" src={newData.recipePhoto.url} />
+                    <Card.Body>
+                        <Card.Title>{newData.recipeName}</Card.Title>
+                        <Card.Text>
+                            {newData.description}
+                        </Card.Text>
+                        <Card.Text>
+                            <small className="text-muted">Cooking Time: {newData.cookingTime} minutes</small>
+                        </Card.Text>
+                        <Link to={`/recipe/${newData._id}`}><Button>Show Recipe</Button></Link>
+                    </Card.Body>
+                </Card></> : <H1>No Recipes</H1>
+            }
         </div>
     )
 }
